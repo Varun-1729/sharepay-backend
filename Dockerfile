@@ -1,10 +1,10 @@
-# STEP 1: Build the Spring Boot application
-FROM maven:3.8.6-openjdk-17 AS build
+# -------- STEP 1: Build Stage --------
+FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# STEP 2: Run the application
+# -------- STEP 2: Runtime Stage --------
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
