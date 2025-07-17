@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splitwise Clone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Splitwise Clone</h1>
+            <p>Split expenses with friends easily</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('users')">👥 Users</button>
+            <button class="tab-button" onclick="showTab('groups')">🏠 Groups</button>
+            <button class="tab-button" onclick="showTab('expenses')">💳 Expenses</button>
+            <button class="tab-button" onclick="showTab('balances')">⚖️ Balances</button>
+        </nav>
+
+        <!-- Users Tab -->
+        <div id="users" class="tab-content active">
+            <div class="section">
+                <h2>Add New User</h2>
+                <form id="userForm" class="form">
+                    <input type="text" id="userName" placeholder="Full Name" required>
+                    <input type="email" id="userEmail" placeholder="Email Address" required>
+                    <input type="tel" id="userPhone" placeholder="Phone Number (optional)">
+                    <button type="submit">Add User</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>All Users</h2>
+                <div id="usersList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- Groups Tab -->
+        <div id="groups" class="tab-content">
+            <div class="section">
+                <h2>Create New Group</h2>
+                <form id="groupForm" class="form">
+                    <input type="text" id="groupName" placeholder="Group Name" required>
+                    <textarea id="groupDescription" placeholder="Description (optional)" rows="3"></textarea>
+                    <button type="submit">Create Group</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>All Groups</h2>
+                <div id="groupsList" class="list"></div>
+            </div>
+
+            <div class="section" id="groupMembersSection" style="display: none;">
+                <h2>Group Members</h2>
+                <div class="form">
+                    <select id="userSelect">
+                        <option value="">Select a user to add</option>
+                    </select>
+                    <button onclick="addUserToGroup()">Add to Group</button>
+                </div>
+                <div id="groupMembersList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- Expenses Tab -->
+        <div id="expenses" class="tab-content">
+            <div class="section">
+                <h2>Add New Expense</h2>
+                <form id="expenseForm" class="form">
+                    <input type="text" id="expenseDescription" placeholder="Expense Description" required>
+                    <input type="number" id="expenseAmount" placeholder="Amount" step="0.01" min="0.01" required>
+                    <select id="expenseGroup" required>
+                        <option value="">Select Group</option>
+                    </select>
+                    <select id="expensePaidBy" required>
+                        <option value="">Who Paid?</option>
+                    </select>
+                    <textarea id="expenseNotes" placeholder="Notes (optional)" rows="2"></textarea>
+                    
+                    <h3>Split Details</h3>
+                    <div id="splitDetails"></div>
+                    <button type="button" onclick="generateEqualSplit()">Equal Split</button>
+                    <button type="submit">Add Expense</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>Recent Expenses</h2>
+                <select id="expenseGroupFilter" onchange="loadExpenses()">
+                    <option value="">Select Group to View Expenses</option>
+                </select>
+                <div id="expensesList" class="list"></div>
+            </div>
+        </div>
+
+        <!-- Balances Tab -->
+        <div id="balances" class="tab-content">
+            <div class="section">
+                <h2>Group Balances</h2>
+                <select id="balanceGroupSelect" onchange="loadGroupBalances()">
+                    <option value="">Select Group to View Balances</option>
+                </select>
+                <div id="balanceResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
